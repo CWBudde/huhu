@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <title>HU-Drop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <div class="space-layer" aria-hidden="true"></div>
+
+    <header class="hud">
+      <div class="hud-badge hud-badge-left">
+        <span class="hud-label">Score</span>
+        <span id="scoreDisplay" class="hud-value">12</span>
+      </div>
+      <div class="brand">HUiSHU.</div>
+      <div class="hud-badge hud-badge-right">
+        <span class="hud-label">Zeit</span>
+        <span id="timeDisplay" class="hud-value">20s</span>
+      </div>
+    </header>
+
+    <main id="gameArea" class="game-area" aria-label="HU-Drop Spielfeld">
+      <section class="hero" aria-hidden="true">
+        <h1 class="title"><span class="title-hu">HU</span><span class="title-drop">-DROP</span></h1>
+        <p class="subtitle">Klick die HU-Wörter!</p>
+      </section>
+
+      <div class="mascot" aria-hidden="true">
+        <div class="mascot-emoji">🦄</div>
+        <div class="mascot-rainbow"></div>
+      </div>
+
+      <div class="cta" aria-hidden="true">Wie schnell bist du? <strong>Jetzt spielen!</strong></div>
+    </main>
+
+    <section id="endScreen" class="end-screen hidden" aria-live="polite">
+      <div class="end-card">
+        <h2>HU-TREFFER!</h2>
+        <p id="finalScore" class="end-score">+0 PUNKT</p>
+        <div class="actions">
+          <button id="playAgainBtn" class="btn btn-primary" type="button">Play again</button>
+          <button id="shareBtn" class="btn btn-secondary" type="button">Share</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>

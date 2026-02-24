@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>HU-Drop</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <div class="stars" aria-hidden="true"></div>
+
+      <!-- HUD: Score left · Brand center · Timer right -->
+      <header class="hud">
+        <div class="hud-badge hud-score">
+          <span class="hud-label">Score</span>
+          <span id="scoreEl" class="hud-value">0</span>
+        </div>
+        <div class="brand" aria-hidden="true">HU·DROP</div>
+        <div class="hud-badge hud-time">
+          <span class="hud-label">Zeit</span>
+          <span id="timeEl" class="hud-value">20s</span>
+        </div>
+      </header>
+
+      <!-- Game area: JS appends falling <button> words here -->
+      <main id="gameArea" class="game-area" aria-label="Spielfeld">
+        <!-- Decorative splash visible before first word spawns -->
+        <div id="splash" class="splash">
+          <h1 class="splash-title">
+            <span class="t-hu">HU</span>
+            <span class="t-drop">DROP</span>
+          </h1>
+          <p class="splash-sub">Klick die HU-Wörter!</p>
+        </div>
+      </main>
+
+      <!-- End screen (shown when countdown hits 0) -->
+      <section id="endScreen" class="end-screen hidden" aria-live="polite">
+        <div class="end-card">
+          <h2 class="end-title">HU-Treffer!</h2>
+          <p id="finalScoreEl" class="end-score">0 Punkte</p>
+          <div class="actions">
+            <button id="playAgainBtn" class="btn btn-primary" type="button">
+              Nochmal!
+            </button>
+            <button id="shareBtn" class="btn btn-secondary" type="button">
+              Teilen
+            </button>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>

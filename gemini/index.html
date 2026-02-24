@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>HU-DROP</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="hud">
+        <div class="hud-item">Score: <span id="score">0</span></div>
+        <div class="hud-item timer">Zeit: <span id="time">20</span>s</div>
+    </div>
+
+    <div id="game-area"></div>
+
+    <!-- Start Screen -->
+    <div id="start-screen" class="screen">
+        <div class="title">HU-DROP</div>
+        <div class="subtitle">KLICK DIE HU-WÖRTER!</div>
+        
+        <!-- Unicorn Placeholder Emoji -->
+        <div style="font-size: 8rem; margin-bottom: 20px; filter: drop-shadow(0 0 20px #ff00ff);">🦄</div>
+        
+        <button id="start-btn" class="main-btn">Jetzt spielen!</button>
+    </div>
+
+    <!-- End Screen -->
+    <div id="end-screen" class="screen hidden">
+        <div class="title">TIME'S UP!</div>
+        <div style="font-size: 2rem; margin: 20px 0;">Dein Score: <span id="final-score" style="color: #00d4ff; font-weight: 900;">0</span></div>
+        <button id="restart-btn" class="main-btn">Nochmal spielen</button>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

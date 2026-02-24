@@ -1,0 +1,29 @@
+# run with treefmt --allow-missing-formatter
+
+[global]
+excludes = []
+
+### Misc
+
+[formatter.keep-sorted]
+command = "keep-sorted"
+includes = ["*"]
+
+[formatter.dprint]
+command = "dprint"
+options = ["fmt"]
+includes = ["*.yaml", "*.yml", "*.js", "*.json", "*.md", "*.toml"]
+
+### typst
+
+[formatter.typstyle]
+command = "typstyle"
+options = ["-i"]
+includes = ["*.typ"]
+
+### Justfile
+
+[formatter.justfile]
+command = "just"
+options = ["--unstable", "--fmt", "--justfile"]
+includes = ["justfile"]
