@@ -13,7 +13,11 @@
     authors: [
       Christian Budde #link("https://github.com/MeKo-Christian")[\@MeKo-Christian] \
     ],
-    title-image: image("assets/agentic_left2.png", height: 100%, fit: "contain"),
+    title-image: image(
+      "assets/agentic_left2.png",
+      height: 100%,
+      fit: "contain",
+    ),
   )
 
   // ============================================================================
@@ -32,7 +36,7 @@
       gutter: 3em,
       [
         ```
-        Mensch: Prompt 
+        Mensch: Prompt
 
         LLM:    Antwort
                   ↓
@@ -242,7 +246,7 @@
         #set align(horizon)
         #text(size: 0.95em)[
           *Die Teilkosten fürs Tippen sinken —\
-          die Kosten für _guten_ Code nicht.*\
+            die Kosten für _guten_ Code nicht.*\
           #v(0.5em)
           Korrektheit, Tests, Sicherheit, Wartbarkeit:\
           weiterhin Aufgabe des Entwicklers.
@@ -394,17 +398,26 @@
         #v(0.6em)
 
         🔧 *Tools* — Aktionen, die der Agent ausführen kann\
-        #text(size: 0.85em, fill: meko_grey)[z.B. Datei lesen, API aufrufen, DB abfragen]
+        #text(
+          size: 0.85em,
+          fill: meko_grey,
+        )[z.B. Datei lesen, API aufrufen, DB abfragen]
 
         #v(0.8em)
 
         📄 *Resources* — Daten, die der Agent lesen kann\
-        #text(size: 0.85em, fill: meko_grey)[z.B. Dateisystem, Dokumentation, Codebase]
+        #text(
+          size: 0.85em,
+          fill: meko_grey,
+        )[z.B. Dateisystem, Dokumentation, Codebase]
 
         #v(0.8em)
 
         💬 *Prompts* — Wiederverwendbare Prompt-Templates\
-        #text(size: 0.85em, fill: meko_grey)[z.B. vordefinierte Workflows, Kontext-Snippets]
+        #text(
+          size: 0.85em,
+          fill: meko_grey,
+        )[z.B. vordefinierte Workflows, Kontext-Snippets]
 
         #v(1.2em)
 
@@ -474,7 +487,7 @@
         *Ursprung:*\
         Simon Willison, 2024 —\
         #text(size: 0.85em)[„_I started it as a joke,\
-        but it's actually starting to be a bit useful._"]
+            but it's actually starting to be a bit useful._"]
 
         #v(1em)
 
@@ -490,17 +503,26 @@
 
   #slide[
     === o1 Pro (High)
-    #align(center + horizon)[#image("assets/o1-pro-high-pelican.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/o1-pro-high-pelican.png",
+      height: 85%,
+    )]
   ]
 
   #slide[
     === Deep Think
-    #align(center + horizon)[#image("assets/deep-think-pelican.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/deep-think-pelican.png",
+      height: 85%,
+    )]
   ]
 
   #slide[
     === Gemini Flash Thinking
-    #align(center + horizon)[#image("assets/flash-pelican-thinking.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/flash-pelican-thinking.png",
+      height: 85%,
+    )]
   ]
 
   #slide[
@@ -515,12 +537,18 @@
 
   #slide[
     === Gemini (latest)
-    #align(center + horizon)[#image("assets/gemini-latest-pelican.jpg", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gemini-latest-pelican.jpg",
+      height: 85%,
+    )]
   ]
 
   #slide[
     === Gemini 2.5 Flash Thinking Max
-    #align(center + horizon)[#image("assets/gemini-2.5-flash-thinking-max.jpg", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gemini-2.5-flash-thinking-max.jpg",
+      height: 85%,
+    )]
   ]
 
   #slide[
@@ -535,12 +563,18 @@
 
   #slide[
     === GPT-5
-    #align(center + horizon)[#image("assets/gpt-5-pelican-card.jpg", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gpt-5-pelican-card.jpg",
+      height: 85%,
+    )]
   ]
 
   #slide[
     === GPT-5 Codex API
-    #align(center + horizon)[#image("assets/gpt-5-codex-api-pelican.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gpt-5-codex-api-pelican.png",
+      height: 85%,
+    )]
   ]
 
   #slide[
@@ -555,7 +589,10 @@
 
   #slide[
     === GPT-5.1 High
-    #align(center + horizon)[#image("assets/gpt-5.1-high-pelican.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gpt-5.1-high-pelican.png",
+      height: 85%,
+    )]
   ]
 
   #slide[
@@ -565,12 +602,18 @@
 
   #slide[
     === Gemini 3 Deep Think
-    #align(center + horizon)[#image("assets/gemini-3-deep-think-pelican.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gemini-3-deep-think-pelican.png",
+      height: 85%,
+    )]
   ]
 
   #slide[
     === Gemini 3.1 Pro
-    #align(center + horizon)[#image("assets/gemini-3.1-pro-pelican.png", height: 85%)]
+    #align(center + horizon)[#image(
+      "assets/gemini-3.1-pro-pelican.png",
+      height: 85%,
+    )]
   ]
 
 ]

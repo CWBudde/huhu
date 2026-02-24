@@ -59,6 +59,11 @@ const endScreenEl = document.getElementById("endScreen");
 const finalScoreEl = document.getElementById("finalScore");
 const playAgainBtn = document.getElementById("playAgainBtn");
 const shareBtn = document.getElementById("shareBtn");
+const startBtn = document.getElementById("startBtn");
+const heroEl = document.querySelector(".hero");
+const ctaEl = document.querySelector(".cta");
+
+const INTRO_FADE_MS = 520;
 
 const state = {
   running: false,
@@ -309,7 +314,26 @@ function startGame() {
   startTimer();
 }
 
+function startFromIntro() {
+  if (!startBtn || state.running) return;
+
+  startBtn.disabled = true;
+  startBtn.classList.add("is-fading");
+  if (heroEl) heroEl.classList.add("intro-fading");
+  if (ctaEl) ctaEl.classList.add("intro-fading");
+
+  window.setTimeout(() => {
+    if (heroEl) heroEl.classList.add("intro-hidden");
+    if (ctaEl) ctaEl.classList.add("intro-hidden");
+    startBtn.classList.add("hidden");
+    startGame();
+  }, INTRO_FADE_MS);
+}
+
 playAgainBtn.addEventListener("click", startGame);
+if (startBtn) {
+  startBtn.addEventListener("click", startFromIntro);
+}
 shareBtn.addEventListener("click", async () => {
   const text = `Ich habe ${state.score} Punkte in HU-Drop geschafft!`;
 
@@ -325,4 +349,4 @@ shareBtn.addEventListener("click", async () => {
   window.alert(text);
 });
 
-startGame();
+updateHud();

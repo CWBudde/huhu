@@ -169,6 +169,7 @@ function spawnWord() {
   const angle = (Math.random() * 8 - 4).toFixed(1); // gentle ±4° tilt
 
   el.style.transform  = `translate3d(${x}px, -60px, 0) rotate(${angle}deg)`;
+  el.style.opacity    = "0"; // tick() will fade it in over 300 ms
   el.style.visibility = "";
 
   // Lifetime removal: auto-expire after exactly 3 s.
@@ -219,8 +220,11 @@ function tick(ts) {
     const y = -60 + travel * frac;
     w.el.style.transform = `translate3d(${w.x}px, ${y}px, 0) rotate(${w.angle}deg)`;
 
-    // Fade: full opacity until fadeStartFrac, then tapers to ~22 % by end
-    if (frac > CONFIG.fadeStartFrac) {
+    // Fade in over first 300 ms, hold, then fade out during last 30 %
+    const FADE_IN_MS = 300;
+    if (age < FADE_IN_MS) {
+      w.el.style.opacity = (age / FADE_IN_MS).toFixed(3);
+    } else if (frac > CONFIG.fadeStartFrac) {
       const f = (frac - CONFIG.fadeStartFrac) / (1 - CONFIG.fadeStartFrac);
       w.el.style.opacity = (1 - f * 0.78).toFixed(3);
     } else {

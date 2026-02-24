@@ -148,6 +148,8 @@ body {
   text-align: center;
   pointer-events: none;
   user-select: none;
+  opacity: 1;
+  transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
 }
 
 .title {
@@ -348,10 +350,54 @@ body {
   color: #d6efff;
   text-shadow: 0 0 8px rgba(73, 211, 255, 0.7);
   pointer-events: none;
+  opacity: 1;
+  transition: opacity 520ms ease, transform 520ms ease, filter 520ms ease;
 }
 
 .cta strong {
   color: #ffd24d;
+}
+
+.intro-start {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  min-width: 170px;
+  min-height: 58px;
+  font-size: clamp(30px, 8vw, 40px);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  border-color: rgba(169, 233, 255, 0.82);
+  box-shadow:
+    0 0 22px rgba(37, 180, 255, 0.8),
+    0 0 42px rgba(37, 180, 255, 0.38);
+  transition: opacity 360ms ease, transform 360ms ease;
+}
+
+.intro-start.is-fading {
+  opacity: 0;
+  transform: translate(-50%, -47%) scale(0.95);
+  pointer-events: none;
+}
+
+.hero.intro-fading {
+  opacity: 0;
+  transform: translateY(-20px) scale(0.97);
+  filter: blur(2px);
+}
+
+.cta.intro-fading {
+  opacity: 0;
+  transform: translate(-50%, 22px) scale(0.97);
+  filter: blur(2px);
+}
+
+.intro-hidden {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .end-screen {
