@@ -10,8 +10,9 @@
 
   #title-slide(
     title: [Agentic Engineering],
+    extra: [Von einfachen Anfragen zu agentischem Arbeiten],
     authors: [
-      Christian Budde #link("https://github.com/MeKo-Christian")[\@MeKo-Christian] \
+      #text(style: "italic")[Christian Budde] #link("https://github.com/MeKo-Christian")[\@MeKo-Christian] \
     ],
     title-image: image(
       "assets/agentic_left2.png",
@@ -614,6 +615,27 @@
       "assets/gemini-3.1-pro-pelican.png",
       height: 85%,
     )]
+  ]
+
+  #slide[
+    #set align(center + horizon)
+
+    === Quellen & Credits
+
+    #v(1.5em)
+
+    Pelikan-Bilder und inhaltliche Grundgedanken (Agentic Engineering,\
+    Vibe Coding, Pelikan-Benchmark) entnommen aus:
+
+    #v(1em)
+
+    #text(size: 1.2em)[
+      #link("https://simonwillison.net/")[simonwillison.net]
+    ]
+
+    #v(0.5em)
+
+    #text(size: 0.85em, fill: meko_grey)[Simon Willison's Weblog]
   ]
 
 ]
