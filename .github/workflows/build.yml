@@ -1,0 +1,46 @@
+name: build
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Typst
+        uses: typst-community/setup-typst@v3
+        with:
+          typst-version: "latest"
+
+      - name: Install Just
+        uses: extractions/setup-just@v2
+
+      - name: Install polylux2pdfpc (optional)
+        continue-on-error: true
+        run: |
+          cargo install --git https://github.com/andreasKroepelin/polylux/ --branch release
+
+      - name: Build presentation and handout
+        run: just build
+
+      - name: Create release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: latest
+          name: latest
+          files: |
+            slides/presentation.pdf
+            slides/handout.pdf
+          draft: false
+          prerelease: false
+          body: |
+            Automated release from commit ${{ github.sha }}
+
+            Download the latest presentation and handout below.

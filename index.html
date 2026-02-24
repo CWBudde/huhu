@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>HU-Drop — Wähle dein Modell</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --border: rgba(255,255,255,0.08);
+      --text: #f0f0ff;
+      --muted: rgba(240,240,255,0.5);
+
+      --claude:  #d97b4f;
+      --gemini:  #4285f4;
+      --codex:   #10a37f;
+    }
+
+    html, body {
+      height: 100%;
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Barlow Condensed', sans-serif;
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100dvh;
+      padding: 2rem 1rem;
+      gap: 3rem;
+    }
+
+    /* ── Hero ────────────────────────────────── */
+    .hero {
+      text-align: center;
+    }
+
+    .hero-eyebrow {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    .hero-title {
+      font-family: 'Anton', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      line-height: 1;
+      letter-spacing: 0.03em;
+    }
+
+    .hero-title .hu   { color: #fff; }
+    .hero-title .drop { color: var(--muted); }
+
+    .hero-sub {
+      margin-top: 0.75rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    /* ── Cards ───────────────────────────────── */
+    .cards {
+      display: flex;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    .card {
+      flex: 1 1 220px;
+      max-width: 280px;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 1rem;
+      padding: 2rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+      text-decoration: none;
+      color: var(--text);
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.2s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card:hover::before { opacity: 1; }
+
+    .card[data-model="claude"] { --accent: var(--claude); }
+    .card[data-model="gemini"] { --accent: var(--gemini); }
+    .card[data-model="codex"]  { --accent: var(--codex);  }
+
+    .card::before {
+      background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--accent) 15%, transparent), transparent 70%);
+    }
+
+    .card:hover {
+      border-color: color-mix(in srgb, var(--accent) 60%, transparent);
+      box-shadow: 0 8px 32px color-mix(in srgb, var(--accent) 20%, transparent);
+    }
+
+    .card-logo {
+      font-size: 2.5rem;
+      filter: grayscale(0.2);
+    }
+
+    .card-model {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .card-name {
+      font-family: 'Anton', sans-serif;
+      font-size: 1.75rem;
+      letter-spacing: 0.05em;
+      text-align: center;
+    }
+
+    .card-desc {
+      font-size: 0.9rem;
+      color: var(--muted);
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .card-cta {
+      margin-top: auto;
+      padding: 0.5rem 1.5rem;
+      border-radius: 9999px;
+      border: 1.5px solid var(--accent);
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      transition: background 0.15s ease, color 0.15s ease;
+    }
+
+    .card:hover .card-cta {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    /* ── Footer ──────────────────────────────── */
+    .footer {
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .footer a {
+      color: var(--muted);
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .footer a:hover { color: var(--text); }
+  </style>
+</head>
+<body>
+
+  <div class="hero">
+    <p class="hero-eyebrow">Vibe Coding Demo</p>
+    <h1 class="hero-title">
+      <span class="hu">HU</span><span class="drop">-DROP</span>
+    </h1>
+    <p class="hero-sub">Dasselbe Spiel — drei Modelle — kein Code-Review</p>
+  </div>
+
+  <div class="cards">
+    <a class="card" data-model="claude" href="./claude/">
+      <div class="card-logo">🟠</div>
+      <span class="card-model">Anthropic</span>
+      <div class="card-name">Claude</div>
+      <p class="card-desc">Generiert von Claude Sonnet</p>
+      <span class="card-cta">Spielen</span>
+    </a>
+
+    <a class="card" data-model="gemini" href="./gemini/">
+      <div class="card-logo">🔵</div>
+      <span class="card-model">Google</span>
+      <div class="card-name">Gemini</div>
+      <p class="card-desc">Generiert von Gemini 2.5 Pro</p>
+      <span class="card-cta">Spielen</span>
+    </a>
+
+    <a class="card" data-model="codex" href="./codex/">
+      <div class="card-logo">🟢</div>
+      <span class="card-model">OpenAI</span>
+      <div class="card-name">Codex</div>
+      <p class="card-desc">Generiert von OpenAI Codex</p>
+      <span class="card-cta">Spielen</span>
+    </a>
+  </div>
+
+  <footer class="footer">
+    <p>Ein Beispiel aus der Präsentation
+      <a href="https://github.com/MeKo-Christian/huhu/releases/download/latest/presentation.pdf">Agentic Engineering</a>
+      &nbsp;·&nbsp;
+      <a href="https://github.com/MeKo-Christian/huhu">GitHub</a>
+    </p>
+  </footer>
+
+</body>
+</html>
