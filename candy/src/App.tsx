@@ -1,5 +1,11 @@
 import { useState, type CSSProperties } from 'react'
 import './App.css'
+import candy1 from './assets/candy/candy-1.png'
+import candy2 from './assets/candy/candy-2.png'
+import candy3 from './assets/candy/candy-3.png'
+import candy4 from './assets/candy/candy-4.png'
+import candy5 from './assets/candy/candy-5.png'
+import candy6 from './assets/candy/candy-6.png'
 
 type Candy = number
 type Slot = Candy | null
@@ -12,14 +18,7 @@ const CLEAR_MS = 260
 const GAP_MS = 90
 const DROP_MS = 280
 
-const candyClasses = [
-  'candy-a',
-  'candy-b',
-  'candy-c',
-  'candy-d',
-  'candy-e',
-  'candy-f'
-]
+const candyImages = [candy1, candy2, candy3, candy4, candy5, candy6]
 
 const randomCandy = (): Candy => Math.floor(Math.random() * CANDY_TYPES)
 const wait = (ms: number): Promise<void> =>
@@ -301,9 +300,16 @@ function App() {
                 aria-label={`Cell ${index + 1}`}
                 disabled={resolving}
               >
-                <span
-                  className={`candy ${candy === null ? 'empty' : candyClasses[candy]} ${clearing.has(index) ? 'clearing' : ''} ${dropping.has(index) ? 'dropping' : ''}`}
-                />
+                {candy === null ? (
+                  <span className="candy empty" />
+                ) : (
+                  <img
+                    src={candyImages[candy]}
+                    alt=""
+                    className={`candy-image ${clearing.has(index) ? 'clearing' : ''} ${dropping.has(index) ? 'dropping' : ''}`}
+                    draggable={false}
+                  />
+                )}
               </button>
             )
           })}
