@@ -4,14 +4,14 @@
 //  CONFIG
 // ═══════════════════════════════════════════════════════════════════
 const CONFIG = {
-  roundSec:        20,    // total round length in seconds
-  wordLifetimeMs:  3000,  // each word lives exactly 3 s
-  spawnStartMs:    500,   // first spawn interval (ms)
-  spawnMinMs:      250,   // fastest spawn interval after ramp
-  spawnRampPerSec: 8,     // ms removed from interval per elapsed second
-  huChance:        0.30,  // ~30 % of spawns are HU-words
-  fallFactor:      0.78,  // fraction of game-area height covered per lifetime
-  fadeStartFrac:   0.70,  // opacity starts dropping at 70 % of lifetime
+  roundSec: 20, // total round length in seconds
+  wordLifetimeMs: 3000, // each word lives exactly 3 s
+  spawnStartMs: 500, // first spawn interval (ms)
+  spawnMinMs: 250, // fastest spawn interval after ramp
+  spawnRampPerSec: 8, // ms removed from interval per elapsed second
+  huChance: 0.3, // ~30 % of spawns are HU-words
+  fallFactor: 0.78, // fraction of game-area height covered per lifetime
+  fadeStartFrac: 0.7, // opacity starts dropping at 70 % of lifetime
 };
 
 // ═══════════════════════════════════════════════════════════════════
@@ -23,60 +23,155 @@ const CONFIG = {
 //                   "schuh" → s·c·h·u·h → substring at [2..3] = "hu" ✓
 // ═══════════════════════════════════════════════════════════════════
 const HU_WORDS = [
-  "Hupe", "Humor", "Hummel", "Husten", "HU",
-  "Hut",  "Hund",  "Hula",   "Huhn",   "Huckepack", "Hula-Hoop",
-  "Schuh", "Schuhe", "Schutz", "Schulter",
-  "Sachunterricht", "Entschuldigung", "Behutsam",
+  // Short punchy HU-words
+  "HU",
+  "HUisHU",
+  "Hut",
+  "Hund",
+  "Huhn",
+  "Hupe",
+  "Hula",
+  // Medium
+  "Humor",
+  "Hummel",
+  "Husten",
+  "Hurra",
+  "Hunger",
+  "Huckepack",
+  "Hula-Hoop",
+  // "Schu…" family — "hu" at positions 2–3
+  "Schuh",
+  "Schuhe",
+  "Schutz",
+  "Schulter",
+  "Schule",
+  // Embedded "hu"
+  "Sachunterricht",
+  "Entschuldigung",
+  "Behutsam",
+  "Joghurt",
+  "Ketchup",
+  "Seehund",
+  "Buchung",
+  "Androhung",
+  "Drehung",
+  "Dschungel",
+  "Enthusiasmus",
+  "exhumieren",
+  "Forschung",
+  "Kautschuk",
+  "reihum",
+  "Thunfisch",
+  "Vorhut",
+  // Extra variety
+  "Humus",
+  "Husky",
+  "Hufe",
+  "Husar",
 ];
 
 const NEUTRAL_WORDS = [
-  "Tisch",  "Wolke",  "Lampe",  "Karte",  "Regen",
-  "Auto",   "Sonne",  "Birne",  "Apfel",  "Pinsel",
-  "Stein",  "Sport",  "Pixel",  "Tasse",  "Fenster",
-  "Blume",  "Stern",  "Gabel",  "Boden",  "Musik",
-  "Tafel",  "Baum",   "Nacht",  "Licht",  "Wind",
-  "Maus",   "Ring",   "Brief",  "Stift",
-  "Kuh",    // "kuh".includes("hu") === false → scores −1 if clicked (fair trap)
+  // Household / everyday
+  "Tisch",
+  "Stuhl",
+  "Lampe",
+  "Karte",
+  "Tasse",
+  "Fenster",
+  "Spiegel",
+  "Decke",
+  "Schrank",
+  "Küche",
+  // Nature
+  "Wolke",
+  "Sonne",
+  "Regen",
+  "Stern",
+  "Baum",
+  "Blume",
+  "Blatt",
+  "Stein",
+  "Wald",
+  "Meer",
+  // Food
+  "Apfel",
+  "Birne",
+  "Brot",
+  "Salat",
+  "Käse",
+  "Torte",
+  "Suppe",
+  "Nudel",
+  "Beere",
+  "Pflaume",
+  // Objects / misc
+  "Auto",
+  "Pinsel",
+  "Pixel",
+  "Sport",
+  "Musik",
+  "Ring",
+  "Brief",
+  "Stift",
+  "Gabel",
+  "Boden",
+  "Nacht",
+  "Licht",
+  "Wind",
+  "Maus",
+  "Tafel",
+  "Kuh", // "kuh".includes("hu") === false → scores −1 (fair trap)
+  "Farbe",
+  "Glanz",
+  "Traum",
+  "Welle",
+  "Pfeil",
 ];
 
-const SKINS = ["skin-green","skin-pink","skin-purple","skin-orange","skin-cyan"];
+const SKINS = [
+  "skin-green",
+  "skin-pink",
+  "skin-purple",
+  "skin-orange",
+  "skin-cyan",
+];
 
 // ═══════════════════════════════════════════════════════════════════
 //  DOM REFS
 // ═══════════════════════════════════════════════════════════════════
-const gameAreaEl   = document.getElementById("gameArea");
-const scoreEl      = document.getElementById("scoreEl");
-const timeEl       = document.getElementById("timeEl");
-const endScreenEl  = document.getElementById("endScreen");
+const gameAreaEl = document.getElementById("gameArea");
+const scoreEl = document.getElementById("scoreEl");
+const timeEl = document.getElementById("timeEl");
+const endScreenEl = document.getElementById("endScreen");
 const finalScoreEl = document.getElementById("finalScoreEl");
 const playAgainBtn = document.getElementById("playAgainBtn");
-const shareBtn     = document.getElementById("shareBtn");
-const splashEl     = document.getElementById("splash");
-const startBtn     = document.getElementById("startBtn");
+const shareBtn = document.getElementById("shareBtn");
+const splashEl = document.getElementById("splash");
+const startBtn = document.getElementById("startBtn");
 
 // ═══════════════════════════════════════════════════════════════════
 //  GAME STATE — single object; fully reset on each new round
 // ═══════════════════════════════════════════════════════════════════
 const state = {
-  running:        false,
-  score:          0,
-  timeLeft:       CONFIG.roundSec,
-  roundStartTs:   0,           // performance.now() at round start
-  nextId:         1,           // monotonic word ID counter
-  activeWords:    new Map(),   // id → word object
-  spawnTimer:     null,
+  running: false,
+  score: 0,
+  timeLeft: CONFIG.roundSec,
+  roundStartTs: 0, // performance.now() at round start
+  nextId: 1, // monotonic word ID counter
+  activeWords: new Map(), // id → word object
+  spawnTimer: null,
   countdownTimer: null,
-  rafId:          null,
+  rafId: null,
 };
 
 // ═══════════════════════════════════════════════════════════════════
 //  HUD
 // ═══════════════════════════════════════════════════════════════════
-const fmt = n => n > 0 ? `+${n}` : String(n);
+const fmt = (n) => (n > 0 ? `+${n}` : String(n));
 
 function updateHud() {
   scoreEl.textContent = fmt(state.score);
-  timeEl.textContent  = `${state.timeLeft}s`;
+  timeEl.textContent = `${state.timeLeft}s`;
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -90,7 +185,10 @@ function pickX(wordW, nowTs) {
     let ok = true;
     for (const w of state.activeWords.values()) {
       if (nowTs - w.spawnTs > 600) continue;
-      if (Math.abs(x - w.x) < (wordW + w.width) / 2 + 8) { ok = false; break; }
+      if (Math.abs(x - w.x) < (wordW + w.width) / 2 + 8) {
+        ok = false;
+        break;
+      }
     }
     if (ok) return x;
   }
@@ -104,10 +202,10 @@ function showDelta(wordEl, positive) {
   const ar = gameAreaEl.getBoundingClientRect();
   const wr = wordEl.getBoundingClientRect();
   const el = document.createElement("div");
-  el.className   = `delta ${positive ? "delta-good" : "delta-bad"}`;
+  el.className = `delta ${positive ? "delta-good" : "delta-bad"}`;
   el.textContent = positive ? "+1" : "−1";
-  el.style.left  = `${wr.left - ar.left + wr.width * 0.2}px`;
-  el.style.top   = `${wr.top  - ar.top}px`;
+  el.style.left = `${wr.left - ar.left + wr.width * 0.2}px`;
+  el.style.top = `${wr.top - ar.top}px`;
   gameAreaEl.appendChild(el);
   setTimeout(() => el.remove(), 720);
 }
@@ -135,7 +233,7 @@ function onWordTap(id) {
   if (!w || w.clicked) return;
   w.clicked = true;
 
-  const isHu  = w.text.toLowerCase().includes("hu");
+  const isHu = w.text.toLowerCase().includes("hu");
   const delta = isHu ? 1 : -1;
   state.score += delta;
   updateHud();
@@ -151,25 +249,25 @@ function spawnWord() {
 
   // Spawn selection: ~30 % HU-words, ~70 % neutral
   const isHu = Math.random() < CONFIG.huChance;
-  const pool  = isHu ? HU_WORDS : NEUTRAL_WORDS;
-  const text  = pool[Math.floor(Math.random() * pool.length)];
-  const id    = state.nextId++;
-  const now   = performance.now();
+  const pool = isHu ? HU_WORDS : NEUTRAL_WORDS;
+  const text = pool[Math.floor(Math.random() * pool.length)];
+  const id = state.nextId++;
+  const now = performance.now();
 
   const el = document.createElement("button");
-  el.type        = "button";
-  el.className   = `word ${SKINS[Math.floor(Math.random() * SKINS.length)]}`;
+  el.type = "button";
+  el.className = `word ${SKINS[Math.floor(Math.random() * SKINS.length)]}`;
   el.textContent = text;
   el.style.visibility = "hidden"; // hide while measuring width
   el.addEventListener("pointerdown", () => onWordTap(id), { passive: true });
   gameAreaEl.appendChild(el);
 
   const width = el.offsetWidth || 100;
-  const x     = pickX(width, now);
+  const x = pickX(width, now);
   const angle = (Math.random() * 8 - 4).toFixed(1); // gentle ±4° tilt
 
-  el.style.transform  = `translate3d(${x}px, -60px, 0) rotate(${angle}deg)`;
-  el.style.opacity    = "0"; // tick() will fade it in over 300 ms
+  el.style.transform = `translate3d(${x}px, -60px, 0) rotate(${angle}deg)`;
+  el.style.opacity = "0"; // tick() will fade it in over 300 ms
   el.style.visibility = "";
 
   // Lifetime removal: auto-expire after exactly 3 s.
@@ -178,10 +276,14 @@ function spawnWord() {
   const expireTimer = setTimeout(() => removeWord(id), CONFIG.wordLifetimeMs);
 
   state.activeWords.set(id, {
-    id, text, el, x, width,
-    angle:      parseFloat(angle),
-    spawnTs:    now,
-    clicked:    false,
+    id,
+    text,
+    el,
+    x,
+    width,
+    angle: parseFloat(angle),
+    spawnTs: now,
+    clicked: false,
     expireTimer,
   });
 }
@@ -207,12 +309,15 @@ function scheduleSpawn() {
 function tick(ts) {
   if (!state.running) return;
 
-  const areaH  = gameAreaEl.clientHeight;
+  const areaH = gameAreaEl.clientHeight;
   const travel = areaH * CONFIG.fallFactor; // total px to fall per lifetime
 
   for (const w of state.activeWords.values()) {
     const age = ts - w.spawnTs;
-    if (age >= CONFIG.wordLifetimeMs) { removeWord(w.id); continue; }
+    if (age >= CONFIG.wordLifetimeMs) {
+      removeWord(w.id);
+      continue;
+    }
 
     const frac = age / CONFIG.wordLifetimeMs;
 
@@ -244,7 +349,7 @@ function clearAllWords() {
     w.el.remove();
   }
   state.activeWords.clear();
-  gameAreaEl.querySelectorAll(".delta").forEach(el => el.remove());
+  gameAreaEl.querySelectorAll(".delta").forEach((el) => el.remove());
 }
 
 // ═══════════════════════════════════════════════════════════════════
@@ -293,14 +398,14 @@ function startGame() {
   splashEl.classList.add("hidden");
 
   Object.assign(state, {
-    running:        true,
-    score:          0,
-    timeLeft:       CONFIG.roundSec,
-    roundStartTs:   performance.now(),
-    nextId:         1,
-    spawnTimer:     null,
+    running: true,
+    score: 0,
+    timeLeft: CONFIG.roundSec,
+    roundStartTs: performance.now(),
+    nextId: 1,
+    spawnTimer: null,
     countdownTimer: null,
-    rafId:          null,
+    rafId: null,
   });
 
   updateHud();
@@ -318,8 +423,12 @@ playAgainBtn.addEventListener("click", startGame);
 shareBtn.addEventListener("click", async () => {
   const msg = `Ich habe ${fmt(state.score)} Punkte in HU-Drop geschafft! 🎮`;
   if (navigator.share) {
-    try { await navigator.share({ title: "HU-Drop", text: msg }); return; }
-    catch { /* cancelled or unavailable */ }
+    try {
+      await navigator.share({ title: "HU-Drop", text: msg });
+      return;
+    } catch {
+      /* cancelled or unavailable */
+    }
   }
   alert(msg); // desktop / unsupported browser stub
 });
