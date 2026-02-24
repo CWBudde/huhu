@@ -10,7 +10,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:wght@700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow+Condensed:ital,wght@0,700;0,800;1,800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="style.css" />
@@ -19,28 +19,43 @@
     <div class="app">
       <div class="stars" aria-hidden="true"></div>
 
-      <!-- HUD: Score left · Brand center · Timer right -->
+      <!-- HUD: brand row + badges row -->
       <header class="hud">
-        <div class="hud-badge hud-score">
-          <span class="hud-label">Score</span>
-          <span id="scoreEl" class="hud-value">0</span>
-        </div>
-        <div class="brand" aria-hidden="true">HU·DROP</div>
-        <div class="hud-badge hud-time">
-          <span class="hud-label">Zeit</span>
-          <span id="timeEl" class="hud-value">20s</span>
+        <div class="brand">HUiSHU.</div>
+        <div class="hud-badges">
+          <div class="hud-badge hud-score">
+            <span class="hud-label">Score:</span>
+            <span id="scoreEl" class="hud-value">0</span>
+          </div>
+          <div class="hud-badge hud-time">
+            <span class="hud-label">Zeit:</span>
+            <span id="timeEl" class="hud-value">20s</span>
+          </div>
         </div>
       </header>
 
-      <!-- Game area: JS appends falling <button> words here -->
+      <!-- Game area: words appended here by JS -->
       <main id="gameArea" class="game-area" aria-label="Spielfeld">
-        <!-- Decorative splash visible before first word spawns -->
+        <!-- Splash — hidden when game starts -->
         <div id="splash" class="splash">
           <h1 class="splash-title">
-            <span class="t-hu">HU</span>
-            <span class="t-drop">DROP</span>
+            <span class="t-hu">HU-</span><span class="t-drop">DROP</span>
           </h1>
-          <p class="splash-sub">Klick die HU-Wörter!</p>
+          <p class="splash-sub">— Klick die HU-Wörter! —</p>
+          <button id="startBtn" class="start-btn" type="button">
+            Spielen!
+          </button>
+        </div>
+
+        <!-- Mascot: always visible behind words -->
+        <div class="mascot" aria-hidden="true">
+          <div class="mascot-emoji">🦄</div>
+          <div class="mascot-rainbow"></div>
+        </div>
+
+        <!-- CTA bar: always visible at bottom -->
+        <div class="cta" aria-hidden="true">
+          Wie schnell bist du? <strong>Jetzt spielen!</strong>
         </div>
       </main>
 

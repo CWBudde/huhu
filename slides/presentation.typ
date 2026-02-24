@@ -135,6 +135,85 @@
   ]
 
   #slide[
+    === 🎮 Beispiel: Ein Minigame per Vibe Coding
+
+    #grid(
+      columns: (auto, 1fr),
+      gutter: 2em,
+      align: horizon,
+      image("assets/game.png", height: 88%),
+      [
+        *HU-Drop* — das "HU"-Minispiel für Vibe-Coding-Experten
+
+        #v(0.5em)
+
+        Wörter fallen von oben — klicke alle, die *„hu"* enthalten.
+
+        #v(0.5em)
+
+        *Core Loop*
+        - Wort erscheint 2 s an zufälliger Position
+        - Enthält „hu" → *+1 Punkt* ✅
+        - Kein „hu" → *−1 Punkt* ❌
+        - Steigende Spawn-Rate für mehr Spannung
+
+        #v(0.5em)
+
+        #text(size: 0.85em, fill: meko_grey)[
+          Prompt → Accept All → läuft im Browser.\
+        ]
+      ],
+    )
+  ]
+
+  #slide[
+    === 🎮 Beispiel: Der Prompt
+
+    #show raw: set text(size: 7pt)
+    #set par(leading: 0.5em)
+
+    ```plain
+    Build a mobile-first web mini-game called "HU-Drop" (single-page app).
+
+    Core gameplay:
+    - Words spawn at the top of the screen and move downward (falling). X-position should be random within the playfield (avoid overlapping if easy).
+    - Spawn happens in a rapid cadence (start ~500ms; optionally ramp faster over time, but keep it simple if needed).
+    - Each word is visible/active for exactly 2.0 seconds from spawn. During those 2 seconds it may fall and/or slightly fade out near the end. After 2 seconds it disappears automatically.
+    - The player can tap/click a word while it's active.
+
+    Scoring:
+    - If the clicked word contains the substring "hu" case-insensitive (word.toLowerCase().includes("hu")), award +1 point.
+    - Otherwise apply -1 point.
+    - A word can only be clicked once; after click it should be removed immediately.
+    - Missing a "hu" word (not clicked before it expires) should NOT penalize (0 points).
+
+    UI:
+    - Top bar HUD: Left/center: Score display ("Score: X"). Right: Countdown timer ("Time: Y").
+    - Game area below HUD where words fall.
+    - End screen when timer reaches 0: Show final score. Buttons: "Play again" (restarts) and optional "Share" (can be stubbed).
+
+    Game timing:
+    - Round duration: configurable, default 20 seconds (acceptable range 15–30).
+    - Timer counts down in whole seconds; game stops spawning when time hits 0 and clears remaining words.
+
+    Content:
+    - HU-words: must contain "hu" (e.g., "Hupe", "Schuh", "Kuh", "Humor", "Hummel", "Husten", "HU").
+    - Neutral words: must NOT contain "hu".
+    - Spawn selection: target ~30% HU-words, ~70% neutral.
+
+    Implementation requirements:
+    - Use plain HTML/CSS/JS or a minimal framework (your choice), but keep it lightweight.
+    - Handle both mouse and touch reliably; word hit targets should be comfortably tappable (~44px height).
+    - Ensure smooth animation (requestAnimationFrame or CSS transitions).
+    - Keep logic clean and well-structured: game state, spawn scheduler, active word objects, click handler, timer loop, restart.
+
+    Deliverables:
+    - Provide a runnable project (single HTML file is fine) with clear instructions to run locally.
+    - Include comments explaining key parts: spawn logic, lifetime removal, scoring check, timer/end-state.
+    ```
+  ]
+
+  #slide[
     === ⚙️ Agentic Engineering
 
     #v(0.1em)
@@ -173,9 +252,241 @@
   ]
 
   // ============================================================================
+  // Das Ökosystem
+  // ============================================================================
+
+  #content-slide([Das Ökosystem: Coding Agents & CLIs])[
+    #set text(size: 16pt)
+
+    #grid(
+      columns: (1fr, 1fr),
+      gutter: 1.5em,
+      [
+        *Terminal / CLI*
+
+        #v(0.4em)
+
+        - *Claude Code* — Sonnet 4.6, Opus 4.6
+        - *OpenAI Codex CLI* — GPT-5.2, GPT-5.3-Codex
+        - *Gemini CLI* — Gemini 3.1 Pro (1M Tokens)
+
+        #v(1em)
+
+        *IDE-Erweiterungen*
+
+        #v(0.4em)
+
+        - *GitHub Copilot Agent* — GPT-5, Claude Sonnet
+        - *Cline / Roo Code* — VS Code, beliebige Modelle
+        - *Continue* — open source, lokal oder cloud
+      ],
+      [
+        *AI-first IDEs*
+
+        #v(0.4em)
+
+        - *Cursor* — Sonnet, GPT-4.1, eigene Modelle
+        - *Windsurf* (Codeium) — SWE-1, Claude, GPT
+        - *VS Code + Copilot* — Edits-Modus, Agent-Modus
+
+        #v(1em)
+
+        *Cloud / Async Agents*
+
+        #v(0.4em)
+
+        - *Devin* (Cognition) — vollständig autonom
+        - *Jules* (Google) — Hintergrund-Tasks, GitHub-Integration
+        - *GitHub Copilot Workspace* — issue → PR
+        - *SWE-agent* — Forschung, SWE-Bench
+      ],
+    )
+  ]
+
+  // ============================================================================
+  // Skills
+  // ============================================================================
+
+  #slide[
+    === Skills
+
+    #v(0.3em)
+
+    #grid(
+      columns: (auto, 1fr),
+      gutter: 2em,
+      align: horizon,
+      image("assets/kungfu.png", height: 88%),
+      [
+        *Skills* — Wissen on demand
+
+        #v(1em)
+
+        Wie Neo, der in Sekunden Kung-Fu lernt:\
+        Agenten bekommen Fähigkeiten _injiziert_ —\
+        nicht durch Training, sondern durch Kontext.
+      ],
+    )
+  ]
+
+  #content-slide([Was sind Skills?])[
+    #toolbox.side-by-side(
+      gutter: 3em,
+      [
+        *Was sind Skills?*
+
+        #v(0.8em)
+
+        - Wiederverwendbare Prompt-Bausteine / Anweisungen
+        - Domänenwissen, Patterns, Coding-Standards
+        - Tool-Nutzungsanleitungen für den Agenten
+        - In Claude Code: `/skill`-Dateien im Projekt
+      ],
+      [
+        *Warum wichtig?*
+
+        #v(0.8em)
+
+        - Agent kennt _deine_ Konventionen, nicht nur allgemeines Wissen
+        - Qualität steigt ohne den Agenten neu zu trainieren
+        - Skills = das neue Institutional Knowledge
+      ],
+    )
+  ]
+
+  // ============================================================================
+  // MCP
+  // ============================================================================
+
+  #content-slide([Model Context Protocol])[
+    #toolbox.side-by-side(
+      gutter: 2em,
+      [
+        *Was ist MCP?*
+
+        #v(0.6em)
+
+        Ein offenes Protokoll, das Agenten standardisiert\
+        mit externen Tools, Daten und Diensten verbindet.
+
+        #v(0.6em)
+
+        #text(style: "italic")[
+          „USB-C für KI-Agenten"
+        ]
+
+        #v(1em)
+
+        *Das Problem davor:*
+        - Jede App × jedes Modell = eigene Integration
+        - N×M Custom-Connectoren, kaum wiederverwendbar
+        - Anthropic, Nov 2024
+
+        #v(1em)
+
+        *Heute:*\
+        OpenAI, Google, alle großen Anbieter unterstützen MCP.\
+        Seit Dez 2025 unter der Linux Foundation (AAIF).
+      ],
+      [
+        *Die drei Kern-Primitive:*
+
+        #v(0.6em)
+
+        🔧 *Tools* — Aktionen, die der Agent ausführen kann\
+        #text(size: 0.85em, fill: meko_grey)[z.B. Datei lesen, API aufrufen, DB abfragen]
+
+        #v(0.8em)
+
+        📄 *Resources* — Daten, die der Agent lesen kann\
+        #text(size: 0.85em, fill: meko_grey)[z.B. Dateisystem, Dokumentation, Codebase]
+
+        #v(0.8em)
+
+        💬 *Prompts* — Wiederverwendbare Prompt-Templates\
+        #text(size: 0.85em, fill: meko_grey)[z.B. vordefinierte Workflows, Kontext-Snippets]
+
+        #v(1.2em)
+
+        *Architektur:*
+
+        #v(0.4em)
+
+        ```
+        Agent (MCP Client)
+          ↔ MCP Server A  (GitHub, Jira, …)
+          ↔ MCP Server B  (Dateisystem, DB, …)
+          ↔ MCP Server C  (eigene Tools, …)
+        ```
+      ],
+    )
+  ]
+
+  // ============================================================================
+  // Appendix
+  // ============================================================================
+
+  #section-slide([Appendix])[]
+
+  // ============================================================================
+  // Pelican-Benchmark
+  // ============================================================================
+
+  #content-slide([🦤 Der Pelikan-Benchmark])[
+    #toolbox.side-by-side(
+      gutter: 2em,
+      [
+        *Was wird gemessen?*
+
+        #v(0.5em)
+
+        Simon Willison bittet jedes Modell, per Prompt ein SVG zu erzeugen:
+
+        #v(0.5em)
+
+        #align(center)[
+          #text(size: 1.05em, style: "italic")[
+            „Generate an SVG of a\
+            pelican riding a bicycle."
+          ]
+        ]
+
+        #v(1em)
+
+        *Warum das interessant ist:*
+        - Kein Trainingsdatensatz enthält viele Pelikan-auf-Fahrrad-SVGs
+        - Räumliches Denken + Code-Generierung kombiniert
+        - Fahrrad korrekt zu zeichnen ist überraschend schwer
+        - Ergebnis sofort visuell verständlich — kein Rubric nötig
+      ],
+      [
+        *Was es misst:*
+
+        #v(0.5em)
+
+        - Räumliches & physikalisches Verständnis
+        - Fähigkeit, _ausführbaren_ Code zu erzeugen
+        - Kreativität vs. mechanische Korrektheit
+        - Fortschritt über Modellgenerationen hinweg
+
+        #v(1em)
+
+        *Ursprung:*\
+        Simon Willison, 2024 —\
+        #text(size: 0.85em)[„_I started it as a joke,\
+        but it's actually starting to be a bit useful._"]
+
+        #v(1em)
+
+        #text(size: 0.85em, fill: meko_grey)[
+          github.com/simonw/pelican-bicycle
+        ]
+      ],
+    )
+  ]
+
   // Pelican-Vergleich: Modelle chronologisch nach Release-Datum
   // (alle Dateien haben identischen Timestamp — Reihenfolge nach Modell-Release)
-  // ============================================================================
 
   #slide[
     === o1 Pro (High)
