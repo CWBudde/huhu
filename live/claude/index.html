@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HU-Drop — Claude (Live)</title>
+  <meta name="description" content="Klick die HU-Wörter! Live während der Präsentation generiert von Claude Code — ein Agentic Engineering Demo." />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="HU-Drop — Claude (Live)" />
+  <meta property="og:description" content="Klick die HU-Wörter! Live während der Präsentation generiert von Claude Code — ein Agentic Engineering Demo." />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="HU-Drop — Claude (Live)" />
+  <meta name="twitter:description" content="Klick die HU-Wörter! Live während der Präsentation generiert von Claude Code — ein Agentic Engineering Demo." />
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="flash"></div>
+
+<div id="hud">
+  <div id="hud-title">HU-DROP</div>
+  <div id="hud-score">0</div>
+  <div id="hud-lives">❤️❤️❤️</div>
+</div>
+
+<div id="arena"></div>
+<div id="level-badge">LEVEL 1</div>
+
+<div id="overlay">
+  <div id="overlay-title">HU-DROP</div>
+  <p class="overlay-sub">
+    Wörter fallen von oben.<br>
+    Klicke alle, die <strong>„hu"</strong> enthalten → <strong>+1</strong><br>
+    Falsche Klicks kosten ein Leben ❤️ und <strong>−1</strong>
+  </p>
+  <div id="final-score"></div>
+  <button id="btn-play">SPIELEN ▶</button>
+  <div class="key-hint">oder Leertaste</div>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
