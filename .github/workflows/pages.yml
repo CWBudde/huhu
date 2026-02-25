@@ -39,6 +39,8 @@ jobs:
           cp -r gemini _site/
           cp -r codex _site/
           cp -r candy/dist _site/candy
+          cp -r live/claude _site/live-claude
+          cp -r live/codex _site/live-codex
 
       - name: Setup Pages
         uses: actions/configure-pages@v5

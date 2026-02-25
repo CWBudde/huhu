@@ -1,0 +1,462 @@
+:root {
+  --space-1: #060311;
+  --space-2: #1c0d36;
+  --space-3: #401055;
+  --panel: rgba(18, 4, 36, 0.76);
+  --line: rgba(255, 171, 255, 0.52);
+  --text: #ffeafe;
+  --yellow: #ffde5a;
+  --hot-pink: #ff4dc9;
+  --orange: #ff8b2f;
+  --cyan: #4dd9ff;
+  --green: #77f055;
+  --red: #ff5178;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  font-family: "Arial Black", "Impact", "Trebuchet MS", sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(circle at 18% 24%, rgba(255, 70, 191, 0.2), transparent 37%),
+    radial-gradient(circle at 80% 70%, rgba(255, 163, 28, 0.2), transparent 34%),
+    radial-gradient(circle at 52% 5%, rgba(157, 98, 255, 0.24), transparent 36%),
+    linear-gradient(165deg, var(--space-1), var(--space-2) 45%, var(--space-3));
+  padding: 1.2rem;
+}
+
+.poster {
+  width: min(760px, 96vw);
+  position: relative;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 2px solid rgba(255, 132, 246, 0.5);
+  padding: 1.25rem 1.25rem 1.35rem;
+  display: grid;
+  gap: 0.9rem;
+  background:
+    radial-gradient(circle at 70% 40%, rgba(255, 117, 39, 0.23), transparent 42%),
+    radial-gradient(circle at 10% 12%, rgba(142, 74, 254, 0.4), transparent 30%),
+    radial-gradient(circle at 60% 70%, rgba(255, 0, 132, 0.22), transparent 45%),
+    linear-gradient(180deg, rgba(8, 2, 22, 0.96), rgba(25, 4, 35, 0.97));
+  box-shadow:
+    0 0 38px rgba(255, 73, 209, 0.36),
+    inset 0 0 45px rgba(255, 87, 204, 0.17);
+}
+
+.poster::before,
+.poster::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+
+.poster::before {
+  inset: 0;
+  background:
+    radial-gradient(circle at 8% 10%, rgba(255, 255, 255, 0.85) 0 1px, transparent 2px),
+    radial-gradient(circle at 22% 26%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px),
+    radial-gradient(circle at 82% 12%, rgba(255, 255, 255, 0.7) 0 1px, transparent 2px),
+    radial-gradient(circle at 91% 32%, rgba(255, 255, 255, 0.62) 0 1px, transparent 2px),
+    radial-gradient(circle at 34% 66%, rgba(255, 255, 255, 0.82) 0 1px, transparent 2px),
+    radial-gradient(circle at 70% 84%, rgba(255, 255, 255, 0.65) 0 1px, transparent 2px);
+  opacity: 0.85;
+}
+
+.poster::after {
+  inset: 0;
+  border-radius: 24px;
+  border: 1px solid rgba(255, 255, 255, 0.13);
+}
+
+.glow {
+  position: absolute;
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  right: -70px;
+  top: -50px;
+  background: radial-gradient(circle, rgba(255, 159, 35, 0.5), rgba(255, 86, 155, 0));
+  filter: blur(5px);
+  pointer-events: none;
+}
+
+.brand-row {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.brand {
+  margin: 0;
+  letter-spacing: 0.04em;
+  font-size: 2.2rem;
+}
+
+.logo-badge {
+  margin: 0;
+  min-width: 118px;
+  text-align: center;
+  line-height: 0.96;
+  font-size: 2.2rem;
+  color: #f4d7ff;
+  padding: 0.45rem 0.6rem 0.35rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 197, 255, 0.86);
+  background: linear-gradient(140deg, rgba(124, 48, 222, 0.95), rgba(84, 10, 142, 0.9));
+  box-shadow: 0 0 18px rgba(198, 103, 255, 0.58);
+}
+
+.title-wrap {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 0.35rem 0 0.1rem;
+}
+
+.mini-title {
+  margin: 0;
+  font-size: 1.95rem;
+  color: var(--yellow);
+  text-shadow: 0 0 10px rgba(255, 242, 80, 0.35);
+}
+
+h1 {
+  margin: 0.1rem 0 0;
+  font-size: clamp(4rem, 11vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: 0.02em;
+  color: #ffe7ff;
+  text-shadow:
+    0 0 14px rgba(255, 89, 216, 0.65),
+    0 0 34px rgba(255, 126, 40, 0.6);
+  background: linear-gradient(180deg, #ffd8ff 0%, #ff76cf 32%, #ff962f 90%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.subtitle {
+  margin: 0.2rem 0 0;
+  color: #ffd2ff;
+  font-size: 1.22rem;
+}
+
+.panel {
+  position: relative;
+  z-index: 1;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--panel);
+  padding: 0.85rem 1rem;
+  box-shadow: inset 0 0 20px rgba(255, 80, 214, 0.14);
+}
+
+.panel h2 {
+  margin: 0;
+  font-size: 1.25rem;
+  color: var(--yellow);
+  text-shadow: 0 0 8px rgba(255, 236, 112, 0.38);
+}
+
+.panel p {
+  margin: 0.3rem 0 0;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 1.04rem;
+  line-height: 1.35;
+}
+
+.panel ul {
+  margin: 0.36rem 0 0;
+  padding-left: 1rem;
+  display: grid;
+  gap: 0.15rem;
+  font-family: "Trebuchet MS", sans-serif;
+  font-size: 1.04rem;
+}
+
+code {
+  border-radius: 5px;
+  padding: 0.05rem 0.33rem;
+  background: rgba(255, 104, 212, 0.22);
+  color: #fff6af;
+}
+
+.hud-row {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.65rem;
+}
+
+.hud-card {
+  text-align: center;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 164, 74, 0.7);
+  background: linear-gradient(170deg, rgba(255, 147, 44, 0.28), rgba(76, 16, 35, 0.66));
+  padding: 0.62rem 0.4rem;
+  box-shadow:
+    inset 0 0 16px rgba(255, 146, 43, 0.22),
+    0 0 16px rgba(255, 128, 0, 0.25);
+}
+
+.hud-card span {
+  display: block;
+  font-size: 0.82rem;
+  letter-spacing: 0.07em;
+  color: #ffe7b7;
+}
+
+.hud-card strong {
+  font-size: 1.92rem;
+  line-height: 1.05;
+}
+
+.hud-card-time {
+  border-color: rgba(63, 232, 255, 0.7);
+  background: linear-gradient(170deg, rgba(43, 208, 255, 0.28), rgba(18, 35, 80, 0.66));
+  box-shadow:
+    inset 0 0 16px rgba(51, 220, 255, 0.2),
+    0 0 16px rgba(23, 191, 255, 0.28);
+}
+
+.hud-card-soft {
+  border-color: rgba(255, 121, 225, 0.68);
+  background: linear-gradient(170deg, rgba(255, 108, 212, 0.24), rgba(75, 19, 72, 0.66));
+  box-shadow:
+    inset 0 0 16px rgba(255, 105, 212, 0.2),
+    0 0 16px rgba(255, 94, 198, 0.25);
+}
+
+.game-area {
+  position: relative;
+  z-index: 1;
+  height: min(56vh, 500px);
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 191, 251, 0.54);
+  background:
+    linear-gradient(to bottom, rgba(255, 153, 0, 0.12), transparent 18%),
+    linear-gradient(to bottom, rgba(57, 8, 90, 0.82), rgba(17, 4, 32, 0.92));
+  box-shadow:
+    inset 0 0 28px rgba(255, 101, 212, 0.2),
+    0 0 24px rgba(221, 92, 255, 0.2);
+}
+
+.game-area::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.16) 1px, transparent 1px);
+  background-size: 100% 40px;
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+.word {
+  position: absolute;
+  top: -44px;
+  padding: 0.46rem 0.86rem 0.42rem;
+  border-radius: 999px;
+  border: 2px solid rgba(255, 216, 143, 0.78);
+  background: linear-gradient(150deg, rgba(245, 129, 31, 0.9), rgba(130, 39, 153, 0.86));
+  color: #fff4da;
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.24rem;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  text-shadow: 0 0 8px rgba(255, 249, 196, 0.32);
+  transition: top linear, transform 120ms ease;
+  z-index: 2;
+}
+
+.word:hover {
+  transform: scale(1.08);
+}
+
+.word.hit {
+  border-color: rgba(178, 255, 118, 0.98);
+  background: linear-gradient(120deg, rgba(86, 179, 41, 0.94), rgba(17, 94, 42, 0.94));
+}
+
+.word.miss {
+  border-color: rgba(255, 133, 133, 0.98);
+  background: linear-gradient(120deg, rgba(226, 64, 87, 0.94), rgba(101, 19, 38, 0.94));
+}
+
+.pop-score {
+  position: absolute;
+  z-index: 4;
+  transform: translate(-50%, -50%);
+  font-size: 1.1rem;
+  font-weight: 900;
+  border-radius: 9px;
+  border: 2px solid transparent;
+  padding: 0.22rem 0.5rem;
+  animation: popFade 450ms ease forwards;
+  pointer-events: none;
+}
+
+.pop-score.good {
+  background: linear-gradient(160deg, rgba(142, 255, 82, 0.95), rgba(42, 128, 14, 0.95));
+  border-color: rgba(205, 255, 180, 0.95);
+  color: #093700;
+}
+
+.pop-score.bad {
+  background: linear-gradient(160deg, rgba(255, 122, 136, 0.95), rgba(133, 22, 52, 0.95));
+  border-color: rgba(255, 202, 211, 0.95);
+  color: #3d0011;
+}
+
+.controls {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.status {
+  margin: 0;
+  min-height: 1.3rem;
+  font-family: "Trebuchet MS", sans-serif;
+  letter-spacing: 0.01em;
+  font-size: 1.05rem;
+}
+
+button {
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(140deg, #ffe45f, #ffaf31);
+  color: #501b00;
+  font-size: 1.22rem;
+  font-weight: 900;
+  cursor: pointer;
+  padding: 0.9rem 1.35rem 0.86rem;
+  box-shadow:
+    inset 0 -2px 0 rgba(120, 44, 0, 0.38),
+    0 0 20px rgba(255, 196, 57, 0.44);
+}
+
+button:hover {
+  filter: brightness(1.06);
+}
+
+.mascot {
+  position: absolute;
+  z-index: 1;
+  filter: drop-shadow(0 0 8px rgba(255, 104, 209, 0.5));
+  pointer-events: none;
+}
+
+.mascot-top {
+  right: 0.6rem;
+  top: 5.3rem;
+  font-size: 2.6rem;
+}
+
+.mascot-bottom {
+  right: 0.5rem;
+  bottom: 4.1rem;
+  font-size: 2.9rem;
+}
+
+@media (max-width: 760px) {
+  .poster {
+    width: min(560px, 96vw);
+    padding: 1rem 1rem 1.15rem;
+    gap: 0.75rem;
+  }
+
+  .brand {
+    font-size: 1.7rem;
+  }
+
+  .logo-badge {
+    min-width: 96px;
+    font-size: 1.8rem;
+  }
+
+  .mini-title {
+    font-size: 1.5rem;
+  }
+
+  h1 {
+    font-size: clamp(3.3rem, 12vw, 4.7rem);
+  }
+
+  .subtitle {
+    font-size: 1.06rem;
+  }
+
+  .panel p,
+  .panel ul,
+  .status {
+    font-size: 0.94rem;
+  }
+
+  .hud-card strong {
+    font-size: 1.46rem;
+  }
+
+  .game-area {
+    height: min(52vh, 400px);
+  }
+
+  button {
+    font-size: 1.08rem;
+    padding: 0.78rem 1.1rem 0.74rem;
+  }
+}
+
+@keyframes popFade {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(0.88);
+  }
+
+  45% {
+    transform: translate(-50%, -68%) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -108%) scale(0.96);
+  }
+}
+
+@media (max-width: 460px) {
+  .brand {
+    font-size: 1.35rem;
+  }
+
+  .logo-badge {
+    font-size: 1.4rem;
+    min-width: 76px;
+  }
+
+  .panel p,
+  .panel ul,
+  .status {
+    font-size: 0.86rem;
+  }
+
+  .hud-card strong {
+    font-size: 1.18rem;
+  }
+
+  .game-area {
+    height: min(45vh, 320px);
+  }
+}

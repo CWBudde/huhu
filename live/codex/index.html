@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>HU-Drop</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <main class="poster">
+      <div class="glow"></div>
+
+      <header class="brand-row">
+        <p class="brand">HUisHU.</p>
+        <p class="logo-badge">HU<br />HU!</p>
+      </header>
+
+      <section class="title-wrap">
+        <p class="mini-title">Mini-Game</p>
+        <h1>HU-Drop</h1>
+        <p class="subtitle">(Reaktionsspiel)</p>
+      </section>
+
+      <section class="panel">
+        <h2>Idee</h2>
+        <p>
+          Klicke die Wörter mit <code>hu</code>. Nur echte <code>hu</code>-Wörter
+          bringen Punkte.
+        </p>
+      </section>
+
+      <section class="panel">
+        <h2>Gameplay</h2>
+        <ul>
+          <li>2 Sekunden pro Wort</li>
+          <li>Klick auf <code>hu</code>: +1 Punkt</li>
+          <li>Fehlklick oder verpasstes <code>hu</code>: -1 Punkt</li>
+        </ul>
+      </section>
+
+      <section class="hud-row">
+        <div class="hud-card">
+          <span>Punkte</span>
+          <strong id="score">0</strong>
+        </div>
+        <div class="hud-card hud-card-time">
+          <span>Timer</span>
+          <strong><span id="time">20</span>s</strong>
+        </div>
+        <div class="hud-card hud-card-soft">
+          <span>Spawn</span>
+          <strong><span id="spawnRate">1200</span>ms</strong>
+        </div>
+      </section>
+
+      <section id="gameArea" class="game-area" aria-label="Spielfeld"></section>
+
+      <footer class="controls">
+        <p id="status" class="status">Husch, husch! Bereit?</p>
+        <button id="startBtn" type="button">Jetzt spielen!</button>
+      </footer>
+
+      <div class="mascot mascot-top">🦄</div>
+      <div class="mascot mascot-bottom">🦄</div>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
