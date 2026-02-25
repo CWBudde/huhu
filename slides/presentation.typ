@@ -437,6 +437,23 @@
   ]
 
   // ============================================================================
+  // Gartner Quote
+  // ============================================================================
+
+  #content-slide([💡 KI-Transformation])[
+    #align(center + horizon)[
+      #block(width: 85%)[
+        #set text(size: 1.35em, style: "italic")
+        „Unternehmen, die beim Einführen von KI ihre Prozesse konsequent neu gestalten, übertreffen ihre Umsatzziele doppelt so häufig wie jene, die einfach Tools einführen und auf Wirkung hoffen."
+
+        #v(1.2em)
+        #set text(size: 0.85em, style: "normal", weight: "bold")
+        #link("https://www.gartner.com/en/newsroom/press-releases/2025-10-27-gartner-says-chros-must-become-an-enterprise-leader-of-how-work-should-change-in-the-ai-era")[Gartner, 2025]
+      ]
+    ]
+  ]
+
+  // ============================================================================
   // Appendix
   // ============================================================================
 
