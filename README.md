@@ -22,6 +22,17 @@ Three versions of the same game — **HU-Drop** — each vibe-coded by a differe
 
 Or use the **[interactive selector](https://meko-christian.github.io/huhu/)** to choose.
 
+## Live Demo (Created During the Presentation)
+
+Two additional variants of HU-Drop were generated **live on stage** during the presentation:
+
+| Version | Play |
+|---------|------|
+| Claude (live) | [Play](https://meko-christian.github.io/huhu/live-claude/) |
+| Codex (live)  | [Play](https://meko-christian.github.io/huhu/live-codex/) |
+
+See [`live/README.md`](live/README.md) for details.
+
 ## Bonus: Candy Crush Clone
 
 A neon-styled Candy Crush clone built with React and Vite:

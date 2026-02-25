@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HU-Drop</title>
+  <style>
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #080810;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
+
+    /* ── HUD ───────────────────────────────────────────── */
+    #hud {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      background: rgba(0,0,0,0.55);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(167,139,250,0.2);
+      z-index: 100;
+    }
+
+    #hud-title {
+      font-size: 1.25rem;
+      font-weight: 900;
+      letter-spacing: 3px;
+      color: #a78bfa;
+      text-shadow: 0 0 18px #7c3aed88;
+    }
+
+    #hud-score {
+      font-size: 2rem;
+      font-weight: 900;
+      color: #fff;
+      min-width: 80px;
+      text-align: center;
+      transition: transform 0.1s;
+    }
+
+    #hud-score.bump {
+      transform: scale(1.3);
+    }
+
+    #hud-lives {
+      font-size: 1.4rem;
+      letter-spacing: 3px;
+      min-width: 90px;
+      text-align: right;
+    }
+
+    /* ── Arena ─────────────────────────────────────────── */
+    #arena {
+      position: fixed;
+      top: 60px; left: 0; right: 0; bottom: 0;
+    }
+
+    /* ── Falling words ─────────────────────────────────── */
+    .word {
+      position: absolute;
+      padding: 9px 22px;
+      border-radius: 100px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      border: 2px solid transparent;
+      animation: fall linear forwards;
+      will-change: transform;
+    }
+
+    .word:hover { filter: brightness(1.25); }
+
+    @keyframes fall {
+      from { top: -70px; }
+      to   { top: calc(100% + 20px); }
+    }
+
+    .word.boom-good {
+      animation: boom-good 0.35s ease-out forwards !important;
+      pointer-events: none;
+    }
+
+    .word.boom-bad {
+      animation: boom-bad 0.35s ease-out forwards !important;
+      pointer-events: none;
+    }
+
+    @keyframes boom-good {
+      0%   { transform: scale(1);   opacity: 1; }
+      50%  { transform: scale(1.5); opacity: 0.9; }
+      100% { transform: scale(0.1); opacity: 0; }
+    }
+
+    @keyframes boom-bad {
+      0%   { transform: translateX(0)    scale(1);   opacity: 1; }
+      20%  { transform: translateX(-14px) scale(1.1); }
+      60%  { transform: translateX(14px) scale(1.1); }
+      100% { transform: translateX(0)    scale(0.1); opacity: 0; }
+    }
+
+    /* ── Score pop ─────────────────────────────────────── */
+    .score-pop {
+      position: absolute;
+      font-size: 1.5rem;
+      font-weight: 900;
+      pointer-events: none;
+      transform: translateX(-50%);
+      animation: score-rise 0.75s ease-out forwards;
+      z-index: 60;
+    }
+
+    @keyframes score-rise {
+      from { opacity: 1; top: var(--y); }
+      to   { opacity: 0; top: calc(var(--y) - 70px); }
+    }
+
+    /* ── Miss tag ──────────────────────────────────────── */
+    .miss-tag {
+      position: absolute;
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: #f97316;
+      pointer-events: none;
+      transform: translateX(-50%);
+      animation: score-rise 0.6s ease-out forwards;
+      z-index: 60;
+    }
+
+    /* ── Screen flash ──────────────────────────────────── */
+    #flash {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      z-index: 150;
+    }
+
+    /* ── Level badge ───────────────────────────────────── */
+    #level-badge {
+      position: fixed;
+      bottom: 16px;
+      right: 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #6d28d9;
+      letter-spacing: 1px;
+      opacity: 0.7;
+    }
+
+    /* ── Overlay ───────────────────────────────────────── */
+    #overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(4,4,14,0.92);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      z-index: 200;
+      transition: opacity 0.3s;
+    }
+
+    #overlay-title {
+      font-size: 3.5rem;
+      font-weight: 900;
+      letter-spacing: 6px;
+      color: #fff;
+      text-shadow: 0 0 30px #7c3aed, 0 0 60px #7c3aed44;
+    }
+
+    .overlay-sub {
+      color: #94a3b8;
+      font-size: 1rem;
+      text-align: center;
+      line-height: 1.7;
+      max-width: 360px;
+    }
+
+    .overlay-sub strong { color: #a78bfa; }
+
+    #final-score {
+      font-size: 2.2rem;
+      font-weight: 900;
+      color: #fbbf24;
+      display: none;
+    }
+
+    #btn-play {
+      margin-top: 8px;
+      padding: 14px 52px;
+      font-size: 1.15rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, #7c3aed, #4f46e5);
+      color: #fff;
+      border: none;
+      border-radius: 100px;
+      cursor: pointer;
+      letter-spacing: 1px;
+      box-shadow: 0 0 24px #7c3aed66;
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    #btn-play:hover {
+      transform: scale(1.06);
+      box-shadow: 0 0 36px #7c3aedaa;
+    }
+
+    .key-hint {
+      font-size: 0.78rem;
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+
+<div id="flash"></div>
+
+<div id="hud">
+  <div id="hud-title">HU-DROP</div>
+  <div id="hud-score">0</div>
+  <div id="hud-lives">❤️❤️❤️</div>
+</div>
+
+<div id="arena"></div>
+<div id="level-badge">LEVEL 1</div>
+
+<div id="overlay">
+  <div id="overlay-title">HU-DROP</div>
+  <p class="overlay-sub">
+    Wörter fallen von oben.<br>
+    Klicke alle, die <strong>„hu"</strong> enthalten → <strong>+1</strong><br>
+    Falsche Klicks kosten ein Leben ❤️ und <strong>−1</strong>
+  </p>
+  <div id="final-score"></div>
+  <button id="btn-play">SPIELEN ▶</button>
+  <div class="key-hint">oder Leertaste</div>
+</div>
+
+<script>
+// ── Word lists ─────────────────────────────────────────────
+const HU = [
+  'Hund','Huhn','Hunger','Humor','Hut','Hupe','Humus','Husar',
+  'Husky','Hummel','Hubschrauber','Huf','Huch','Human',
+  'Schuh','Schuhe','Schule','Schutz','Schulter','Schulung',
+  'Schuft','Schuster','Schuld','Schuldig'
+];
+
+const OTHER = [
+  'Baum','Mond','Tier','Auto','Blatt','Buch','Kind','Zeit',
+  'Ring','Ball','Wald','Berg','Meer','Sand','Wind','Feuer',
+  'Wasser','Licht','Nacht','Tag','Sonne','Wolke','Fluss',
+  'See','Land','Stadt','Regen','Eis','Stein','Rose','Blume',
+  'Vogel','Fisch','Katze','Maus','Tisch','Dach','Bach',
+  'Nuss','Gras','Feld','Turm','Kerze','Lampe','Boden',
+  'Decke','Wand','Fenster','Tür','Stuhl','Brief','Gabel'
+];
+
+// ── Color palettes ─────────────────────────────────────────
+const PALETTES = [
+  { bg:'#1e1b4b', border:'#818cf8', text:'#e0e7ff' },
+  { bg:'#1a103a', border:'#a78bfa', text:'#ede9fe' },
+  { bg:'#172554', border:'#60a5fa', text:'#dbeafe' },
+  { bg:'#1c2340', border:'#38bdf8', text:'#e0f2fe' },
+  { bg:'#0f2922', border:'#34d399', text:'#d1fae5' },
+  { bg:'#2a1a00', border:'#fbbf24', text:'#fef3c7' },
+  { bg:'#2d1a1a', border:'#fb923c', text:'#ffedd5' },
+  { bg:'#1f1f2e', border:'#9ca3af', text:'#f3f4f6' },
+];
+
+// ── State ──────────────────────────────────────────────────
+let score    = 0;
+let lives    = 3;
+let level    = 1;
+let active   = false;
+let spawnMs  = 1300;   // ms between spawns
+let fallMs   = 3000;   // ms to fall across screen
+let spawnTid = null;
+let levelTid = null;
+let words    = [];
+
+// ── DOM ────────────────────────────────────────────────────
+const arena        = document.getElementById('arena');
+const hudScore     = document.getElementById('hud-score');
+const hudLives     = document.getElementById('hud-lives');
+const levelBadge   = document.getElementById('level-badge');
+const overlay      = document.getElementById('overlay');
+const finalScore   = document.getElementById('final-score');
+const btnPlay      = document.getElementById('btn-play');
+const flash        = document.getElementById('flash');
+
+// ── Helpers ────────────────────────────────────────────────
+const rand = (a, b) => Math.random() * (b - a) + a;
+const pick = arr => arr[Math.floor(Math.random() * arr.length)];
+
+function flashScreen(color, alpha) {
+  flash.style.background = color;
+  flash.style.opacity = alpha;
+  setTimeout(() => { flash.style.opacity = 0; }, 180);
+}
+
+function bumpScore() {
+  hudScore.classList.remove('bump');
+  void hudScore.offsetWidth; // reflow
+  hudScore.classList.add('bump');
+  setTimeout(() => hudScore.classList.remove('bump'), 180);
+}
+
+function renderLives() {
+  hudLives.textContent = '❤️'.repeat(lives) + '🖤'.repeat(3 - lives);
+}
+
+function spawnPop(x, y, text, color) {
+  const el = document.createElement('div');
+  el.className = 'score-pop';
+  el.textContent = text;
+  el.style.color = color;
+  el.style.setProperty('--y', y + 'px');
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
+  arena.appendChild(el);
+  setTimeout(() => el.remove(), 750);
+}
+
+// ── Spawn word ─────────────────────────────────────────────
+function spawnWord() {
+  if (!active) return;
+
+  const isHu  = Math.random() < 0.38;
+  const pool  = isHu ? HU : OTHER;
+  const word  = pick(pool);
+  const pal   = pick(PALETTES);
+
+  const el = document.createElement('div');
+  el.className = 'word';
+  el.textContent = word;
+  el.style.background  = pal.bg;
+  el.style.borderColor = pal.border;
+  el.style.color       = pal.text;
+  el.style.boxShadow   = `0 0 12px ${pal.border}44`;
+
+  // Horizontal position — keep element inset from edges
+  const maxX = arena.clientWidth - 220;
+  el.style.left = rand(16, Math.max(16, maxX)) + 'px';
+
+  const dur = fallMs + rand(-200, 200);
+  el.style.animationDuration = dur + 'ms';
+
+  el.addEventListener('click', ev => onClick(ev, el, isHu));
+  arena.appendChild(el);
+  words.push(el);
+
+  // Miss detection for hu-words
+  const missTimeout = setTimeout(() => {
+    if (!el.dataset.clicked && el.parentNode) {
+      if (isHu) {
+        const r = el.getBoundingClientRect();
+        const ar = arena.getBoundingClientRect();
+        const tag = document.createElement('div');
+        tag.className = 'miss-tag';
+        tag.textContent = 'verpasst!';
+        tag.style.setProperty('--y', (r.top - ar.top) + 'px');
+        tag.style.left = (r.left - ar.left + r.width / 2) + 'px';
+        tag.style.top  = (r.top  - ar.top) + 'px';
+        arena.appendChild(tag);
+        setTimeout(() => tag.remove(), 600);
+      }
+      el.remove();
+      words = words.filter(w => w !== el);
+    }
+  }, dur + 60);
+
+  el.dataset.missTimeout = missTimeout;
+}
+
+// ── Click handler ──────────────────────────────────────────
+function onClick(ev, el, isHu) {
+  ev.stopPropagation();
+  if (el.dataset.clicked) return;
+  el.dataset.clicked = '1';
+  clearTimeout(Number(el.dataset.missTimeout));
+
+  const r  = el.getBoundingClientRect();
+  const ar = arena.getBoundingClientRect();
+  const cx = r.left - ar.left + r.width  / 2;
+  const cy = r.top  - ar.top  + r.height / 2;
+
+  if (isHu) {
+    score++;
+    el.classList.add('boom-good');
+    spawnPop(cx, cy, '+1', '#4ade80');
+    flashScreen('rgba(52,211,153,0.12)', 1);
+  } else {
+    score = Math.max(score - 1, score - 1); // allow negative
+    score--;
+    lives--;
+    el.classList.add('boom-bad');
+    spawnPop(cx, cy, '−1', '#f87171');
+    flashScreen('rgba(239,68,68,0.22)', 1);
+    renderLives();
+    if (lives <= 0) {
+      setTimeout(endGame, 420);
+      return;
+    }
+  }
+
+  hudScore.textContent = score;
+  bumpScore();
+
+  setTimeout(() => {
+    el.remove();
+    words = words.filter(w => w !== el);
+  }, 360);
+}
+
+// ── Difficulty ramp ────────────────────────────────────────
+function rampDifficulty() {
+  if (!active) return;
+  level++;
+  spawnMs = Math.max(380, spawnMs - 120);
+  fallMs  = Math.max(1600, fallMs  - 180);
+  levelBadge.textContent = `LEVEL ${level}`;
+  levelBadge.style.color = level > 5 ? '#ef4444' : level > 3 ? '#f97316' : '#6d28d9';
+
+  clearInterval(spawnTid);
+  spawnTid = setInterval(spawnWord, spawnMs);
+}
+
+// ── Game start ─────────────────────────────────────────────
+function startGame() {
+  score   = 0;
+  lives   = 3;
+  level   = 1;
+  spawnMs = 1300;
+  fallMs  = 3000;
+  active  = true;
+
+  hudScore.textContent = '0';
+  levelBadge.textContent = 'LEVEL 1';
+  levelBadge.style.color = '#6d28d9';
+  renderLives();
+
+  // Clear leftover words
+  arena.innerHTML = '';
+  words = [];
+
+  overlay.style.opacity = '0';
+  overlay.style.pointerEvents = 'none';
+  setTimeout(() => overlay.style.display = 'none', 300);
+
+  spawnTid = setInterval(spawnWord, spawnMs);
+  levelTid = setInterval(rampDifficulty, 14000);
+}
+
+// ── Game end ───────────────────────────────────────────────
+function endGame() {
+  active = false;
+  clearInterval(spawnTid);
+  clearInterval(levelTid);
+
+  // Freeze & fade remaining words
+  words.forEach(w => {
+    w.style.animationPlayState = 'paused';
+    w.style.opacity = '0.2';
+  });
+  setTimeout(() => {
+    arena.innerHTML = '';
+    words = [];
+  }, 500);
+
+  const msg = score >= 20 ? '🏆 Mega!' : score >= 10 ? '🎉 Gut!' : score >= 0 ? '😅 OK!' : '💀 Outch!';
+  finalScore.textContent = `${msg}  ${score} Punkte`;
+  finalScore.style.display = 'block';
+  btnPlay.textContent = 'NOCHMAL ▶';
+
+  overlay.style.display = 'flex';
+  requestAnimationFrame(() => { overlay.style.opacity = '1'; });
+  overlay.style.pointerEvents = 'auto';
+}
+
+// ── Controls ───────────────────────────────────────────────
+btnPlay.addEventListener('click', startGame);
+
+document.addEventListener('keydown', e => {
+  if (e.code === 'Space' && !active) {
+    e.preventDefault();
+    startGame();
+  }
+});
+  </script>
+</body>
+</html>
