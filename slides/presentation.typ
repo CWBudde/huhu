@@ -12,7 +12,7 @@
     title: [Agentic Engineering],
     extra: [Von einfachen Anfragen zu agentischem Arbeiten],
     authors: [
-      #text(style: "italic")[Christian Budde] #link("https://github.com/MeKo-Christian")[\@MeKo-Christian] \
+      #text(style: "italic")[Christian Budde] #link("https://github.com/cwbudde")[\@cwbudde] \
     ],
     title-image: image(
       "assets/agentic_left2.png",

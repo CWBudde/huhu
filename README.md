@@ -2,34 +2,34 @@
 
 A presentation about the risks and failure modes of agentic engineering, exploring the difference between "vibe coding" and disciplined agentic development.
 
-**Author:** Christian Budde ([@MeKo-Christian](https://github.com/MeKo-Christian))
+**Author:** Christian Budde ([@cwbudde](https://github.com/cwbudde))
 
 ## Download the Slides
 
-[Download the presentation (PDF)](https://github.com/MeKo-Christian/huhu/releases/download/latest/presentation.pdf)
+[Download the presentation (PDF)](https://github.com/cwbudde/huhu/releases/download/latest/presentation.pdf)
 
-[Download the handout (PDF)](https://github.com/MeKo-Christian/huhu/releases/download/latest/handout.pdf)
+[Download the handout (PDF)](https://github.com/cwbudde/huhu/releases/download/latest/handout.pdf)
 
 ## Play the Demo Games
 
 Three versions of the same game — **HU-Drop** — each vibe-coded by a different AI model from the same prompt, with no code review:
 
-| Version | Model | Play |
-|---------|-------|------|
-| Claude  | Anthropic Claude | [Play](https://meko-christian.github.io/huhu/claude/) |
-| Gemini  | Google Gemini    | [Play](https://meko-christian.github.io/huhu/gemini/) |
-| Codex   | OpenAI Codex     | [Play](https://meko-christian.github.io/huhu/codex/) |
+| Version | Model            | Play                                           |
+| ------- | ---------------- | ---------------------------------------------- |
+| Claude  | Anthropic Claude | [Play](https://cwbudde.github.io/huhu/claude/) |
+| Gemini  | Google Gemini    | [Play](https://cwbudde.github.io/huhu/gemini/) |
+| Codex   | OpenAI Codex     | [Play](https://cwbudde.github.io/huhu/codex/)  |
 
-Or use the **[interactive selector](https://meko-christian.github.io/huhu/)** to choose.
+Or use the **[interactive selector](https://cwbudde.github.io/huhu/)** to choose.
 
 ## Live Demo (Created During the Presentation)
 
 Two additional variants of HU-Drop were generated **live on stage** during the presentation:
 
-| Version | Play |
-|---------|------|
-| Claude (live) | [Play](https://meko-christian.github.io/huhu/live-claude/) |
-| Codex (live)  | [Play](https://meko-christian.github.io/huhu/live-codex/) |
+| Version       | Play                                                |
+| ------------- | --------------------------------------------------- |
+| Claude (live) | [Play](https://cwbudde.github.io/huhu/live-claude/) |
+| Codex (live)  | [Play](https://cwbudde.github.io/huhu/live-codex/)  |
 
 See [`live/README.md`](live/README.md) for details.
 
@@ -37,11 +37,11 @@ See [`live/README.md`](live/README.md) for details.
 
 A neon-styled Candy Crush clone built with React and Vite:
 
-**[Play Neon Candy Crush](https://meko-christian.github.io/huhu/candy/)**
+**[Play Neon Candy Crush](https://cwbudde.github.io/huhu/candy/)**
 
 ## Overview
 
-This presentation explores the emerging discipline of *agentic engineering* — using AI agents in software development workflows — and contrasts it with *vibe coding*: the practice of generating code via prompts without review or understanding.
+This presentation explores the emerging discipline of _agentic engineering_ — using AI agents in software development workflows — and contrasts it with _vibe coding_: the practice of generating code via prompts without review or understanding.
 
 The three HU-Drop game implementations serve as a live demonstration: the same prompt, three different models, three different results. None of the code was reviewed before publishing.
 
